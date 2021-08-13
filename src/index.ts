@@ -1,33 +1,44 @@
-import { User, UserAccount, Counter, Sum, Countdown } from './classes'
+import * as DB from 'nedb';
 
-
-const iUser: User = {
-	firstName: 'João',
-	lastName: 'Silva',
-	id: 232323
+interface Struct {
+  a: string;
+  id?: string;
 }
 
-let user: UserAccount;
 
-user = new UserAccount('Gilson', 'Doi Junior')
+(async function(){
+  const db = new DB({ filename: './db', autoload: true });
+  db.insert([{ a: 5 }, { a: 42 }, { a: 5 }], function (err) {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log('saved')
+    }
+  });
+  
+  
+  db.find({}, function (err: any, docs: Struct[]) {
+    if(err) {
+      console.log(err)
+    } else {
+      console.log(docs)
+    }
+  });
+  
+  
+  await db.remove({a: 5}, { multi: true });
+  await db.update({a: 42}, { $set: {a: 10} });
 
-
-console.log(iUser, user)
-
- 
-const counter: Counter = new Counter(10);
-
-const countdown: Countdown = new Countdown(10)
-
-const sum: Sum = new Sum()
-
-console.log(counter, countdown, sum)
-
-
-// counter.next()
-
-countdown.next()
-
-sum.next()
-
-console.log(counter, countdown, sum)
+  const find: Promise<Struct[]> = new Promise((resolve, reject) => {
+    db.find({}, function(err: any, docs: Struct[]){
+      if(err){
+        reject(err)
+      }
+      resolve(docs)
+    })
+  });
+  
+  const list = (await find );
+  console.log(list);
+  
+})()
