@@ -8,7 +8,9 @@ interface Struct {
 
 (async function(){
   const db = new DB({ filename: './db', autoload: true });
-  db.insert([{ a: 5 }, { a: 42 }, { a: 5 }], function (err) {
+
+
+  db.insert([{ a: 5 }, { a: 42 }, { a: 5 }, {b: 12, c: 'sdsdad'}], function (err) {
     if(err) {
       console.log(err)
     } else {
@@ -26,8 +28,8 @@ interface Struct {
   });
   
   
-  await db.remove({a: 5}, { multi: true });
-  await db.update({a: 42}, { $set: {a: 10} });
+  await db.remove({a: 5}, { multi: false });
+  await db.update({a: 5}, { $set: {a: 10} });
 
   const find: Promise<Struct[]> = new Promise((resolve, reject) => {
     db.find({}, function(err: any, docs: Struct[]){
