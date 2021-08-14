@@ -24,7 +24,7 @@ const sum: Sum = new Sum()
 console.log(counter, countdown, sum)
 
 
-// counter.next()
+//counter.next()
 
 countdown.next()
 
