@@ -1,10 +1,10 @@
 import * as DB from 'nedb';
 
+
 interface Struct {
   a: string;
   id?: string;
 }
-
 
 (async function(){
   const db = new DB({ filename: './db', autoload: true });
