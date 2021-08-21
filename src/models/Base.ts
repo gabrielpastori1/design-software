@@ -1,21 +1,45 @@
 import { BaseDS } from "src/datasources/BaseDS";
 
 
-export class Base {
-    insert(): void {
-        throw new Error("Method not implemented.");
+export class Usuario {
+    // public static insert(name: string, age: number): void {
+    //     this.dataSource 
+    //     throw new Error("Method not implemented.");
+    // }
+    public constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
     }
-    delete(): void {
-        throw new Error("Method not implemented.");
+    public save() {
+        this.dataSource.getConection()?.insert([{
+            name: this.name,
+            age: this.age
+        }])
     }
-    update(): void {
-        throw new Error("Method not implemented.");
+    deleteOne(params: any): void {
+        this.dataSource.getConection()?.remove(params, {multi: false})
     }
-    list(): any[] {
-        throw new Error("Method not implemented.");
+    deleteMany(params: any): void {
+        this.dataSource.getConection()?.remove(params, {multi: true})
+    }
+    update(params: any, newValue: any): void {
+        this.dataSource.getConection()?.update(params, newValue);
+    }
+    async list(): Promise<Usuario[]>  {
+        const find: Promise<Usuario[]> = new Promise((resolve, reject) => {
+            this.dataSource.getConection()?.find({}, function(err: any, docs: Usuario[]){
+              if(err){
+                reject(err)
+              }
+              resolve(docs)
+            })
+        });
+        return find;
+        
     }
 
-    
+    private name: string;
+    private age: number;
     private dataSource = BaseDS.getInstance()
 
 

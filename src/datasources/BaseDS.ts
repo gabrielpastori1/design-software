@@ -19,4 +19,8 @@ export class BaseDS {
         return BaseDS.instance;
     }
 
+    public getConection() {
+        return this.db;
+    }
+
 }

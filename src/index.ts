@@ -9,7 +9,6 @@ interface Struct {
 (async function(){
   const db = new DB({ filename: './db', autoload: true });
 
-
   db.insert([{ a: 5 }, { a: 42 }, { a: 5 }, {b: 12, c: 'sdsdad'}], function (err) {
     if(err) {
       console.log(err)
