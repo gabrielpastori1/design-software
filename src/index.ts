@@ -1,19 +1,13 @@
-import * as readline from 'readline-sync';
-import StateMachine from './StateMachine';
-
-(async function (){
-  let input;
+import * as readline from 'readline-sync'
+import StateMachine from './StateMachine'
+import Menu from './views/Menu'
+import Sample from './views/Sample'
+;(async function () {
+  // console.log(Menu)
+  const stateControl: StateMachine = new StateMachine(new Menu())
+  stateControl.addState(new Sample())
+  let input = ''
   do {
-    input = readline.question('aperte a alternativa desejada:'+
-    '(1) botão 1 '+
-    '(2) botão 2 '+
-    '(s) Sair\n')
-    console.log(input)
-
-  } while(input !== 's')
+    stateControl.exec('')
+  } while (stateControl.getCurState() !== 'END')
 })()
-
-
-
-
-

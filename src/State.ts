@@ -1,11 +1,9 @@
-
-interface Transition {
-    input: string, 
-    callback: () => string
+export interface Transition {
+  input: string
+  callback: () => string
 }
 
-
-export default interface State {
-    name: string,
-    transitionTable: Transition[]
+export interface State {
+  name: string
+  transitionTable: Transition[]
 }
